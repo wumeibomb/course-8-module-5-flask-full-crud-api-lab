@@ -48,7 +48,7 @@ def create_event():
         "title": new_event.title
     }}
 
-    return jsonify(output)
+    return jsonify(output), 201
 
 # Update the title of an existing event
 @app.route("/events/<int:event_id>", methods=["PATCH"])
@@ -63,7 +63,7 @@ def update_event(event_id):
     if "title" in data:
         find_event.title = Title
         
-    return jsonify(find_event.to_dict())
+    return jsonify(find_event.to_dict()), 200
 
 
 # Remove an event from the list
@@ -76,7 +76,7 @@ def delete_event(event_id):
     if not find_event:
         return ("Not found", 404)
     events = [test for test in events if test.id != event_id]
-    return ("DELETED", 204)
+    return ("DELETED"), 204
 
 
 
