@@ -43,10 +43,10 @@ def create_event():
 
     events.append(new_event)
 
-    output = {"date": {
+    output = {
         "id": new_event.id,
         "title": new_event.title
-    }}
+    }
 
     return jsonify(output), 201
 
@@ -56,13 +56,14 @@ def update_event(event_id):
     data = request.get_json()
     Title = data["title"]
 
-    find_event = next((test for test in events if test.id == event_id))
+    find_event = next((test for test in events if test.id == event_id), None) #NONE IS VERY IMPORTANT HERE
 
     if not find_event:
-        return ("error, not found"), 404
+                return ("error, not found"), 404
     if "title" in data:
-        find_event.title = Title
-        
+                find_event.title = Title
+
+
     return jsonify(find_event.to_dict()), 200
 
 
@@ -71,7 +72,7 @@ def update_event(event_id):
 def delete_event(event_id):
     global events
     
-    find_event = next((test for test in events if test.id == event_id))
+    find_event = next((test for test in events if test.id == event_id), None)
 
     if not find_event:
         return ("Not found", 404)
