@@ -55,7 +55,8 @@ def update_event(event_id):
 # Remove an event from the list
 @app.route("/events/<int:event_id>", methods=["DELETE"])
 def delete_event(event_id):
-
+    global events
+    
     find_event = next((test for test in events if test.id == event_id))
 
     if not find_event:
