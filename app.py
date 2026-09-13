@@ -17,11 +17,18 @@ events = [
     Event(2, "Python Workshop")
 ]
 
-# TODO: Task 1 - Define the Problem
+@app.route("/", methods=["GET"])
+def get_events():
+    print (events)
+    event = (eachevent for eachevent in events )
+    print (event)
+    return jsonify([event.to_dict()]), 200
+
 # Create a new event from JSON input
 @app.route("/events", methods=["POST"])
 def create_event():
     data = request.get_json()
+    
     Title = data["title"]
     event_id = len(events) + 1
 
@@ -30,11 +37,8 @@ def create_event():
     events.append(new_event)
     print(new_event.to_dict())
 
-    return jsonify({
-        "data": new_event.to_dict()
-    }), 201
+    return (new_event.to_dict()), 201
 
-# TODO: Task 1 - Define the Problem
 # Update the title of an existing event
 @app.route("/events/<int:event_id>", methods=["PATCH"])
 def update_event(event_id):
@@ -51,7 +55,6 @@ def update_event(event_id):
     return jsonify(find_event.to_dict())
 
 
-# TODO: Task 1 - Define the Problem
 # Remove an event from the list
 @app.route("/events/<int:event_id>", methods=["DELETE"])
 def delete_event(event_id):
